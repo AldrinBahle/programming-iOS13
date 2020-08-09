@@ -170,3 +170,38 @@ extension Array where Element:UIView {
 }
 
 //Contraint Issues.
+extension UIView {
+    func reportAmbiguity(filtering:Bool = false) {
+        let has = self.hasAmbiguousLayout
+        if has || !filtering {
+            print(self, has)
+        }
+        for sub in self.subviews {
+            sub.reportAmbiguity(filtering: filtering)
+        }
+    }
+    func listConstraints(recursing:Bool = true,
+                         up:Bool = false, filtering:Bool = false) {
+        let arr1 = self.constraintsAffectingLayout(for: .horizontal)
+        let arr2 = self.constraintsAffectingLayout(for: .vertical)
+        var arr = arr1 + arr2
+        if filtering {
+            arr = arr.filter {
+                $0.firstItem as? UIView == self ||
+                $0.secondItem as? UIView == self }
+        }
+        if !arr.isEmpty {
+            print(self); arr.forEach { print($0) }; print()
+        }
+        guard recursing else { return }
+        if !up { // down
+            for sub in self.subviews {
+                sub.listConstraints(up:up)
+            }
+        } else { // up
+            self.superview?.listConstraints(up:up)
+        }
+    }
+}
+
+//Named Views
