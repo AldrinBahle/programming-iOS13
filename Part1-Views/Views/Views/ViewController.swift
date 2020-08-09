@@ -100,7 +100,124 @@ class ViewController: UIViewController {
 //        let t = CGAffineTransform(translationX: 100, y: 0)
 //        v2.transform = t.concatenating(r)
 //        v2.transform = r.inverted().concatenating(v2.transform)
+        //Figure 1-13
+//        let v1 = UIView(frame: CGRect(100, 111, 132, 194))
+//        v1.backgroundColor = UIColor(red: 0, green: 0.4, blue: 1, alpha: 1)
+//        let v2 = UIView(frame:CGRect(0, 0, 132, 10))
+//        v2.backgroundColor = UIColor(red: 0.5, green: 1, blue: 0, alpha: 1)
+//        let v1b = v1.bounds
+//        let v3 = UIView(frame: CGRect(v1b.width-20, v1b.height-20, 20, 20))
+//        v3.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
+//        self.view.addSubview(v1)
+//        v1.addSubview(v2)
+//        v1.addSubview(v3)
+//
+//        //applying springs and struts.
+//        v2.autoresizingMask = .flexibleWidth
+//        v3.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin]
+//
+//        //applying autoresizing to give the behavior in Figure 1-14
+//        v1.bounds.size.width += 40
+//        v1.bounds.size.height -= 50
+        //Implicit Autoresizing Constraints.
+//        let lab1 = UILabel(frame: CGRect(270, 20, 42, 22))
+//        lab1.autoresizingMask = [.flexibleLeftMargin, .flexibleBottomMargin]
+//        lab1.text = "Hello"
+//        self.view.addSubview(lab1)
+//        //label that uses autolayout.
+//        let lab2 = UILabel()
+//        lab2.translatesAutoresizingMaskIntoConstraints = false
+//        lab2.text = "Aldrin"
+//        self.view.addSubview(lab2)
+//        NSLayoutConstraint.activate([
+//            lab2.topAnchor.constraint(equalTo: lab1.bottomAnchor, constant: 20),
+//            lab2.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20)
+//        ])
+        //Creating Constraints in Code.
+        let v1 = UIView(frame: CGRect(100, 111, 132, 194))
+        v1.backgroundColor = UIColor(red: 0, green: 0.4, blue: 1, alpha: 1)
+        let v2 = UIView()
+        v2.backgroundColor = UIColor(red: 0.5, green: 1, blue: 0, alpha: 1)
+        let v3 = UIView()
+        v3.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
+        self.view.addSubview(v1)
+        v1.addSubview(v2)
+        v1.addSubview(v3)
+        v2.translatesAutoresizingMaskIntoConstraints = false
+        v3.translatesAutoresizingMaskIntoConstraints = false
         
+        v1.addConstraint(
+            NSLayoutConstraint(item: v2,
+                               attribute: .leading,
+                               relatedBy: .equal,
+                               toItem: v1,
+                               attribute: .leading,
+                               multiplier: 1,
+                               constant: 0)
+        )
+        v1.addConstraint(
+            NSLayoutConstraint(item: v2,
+                               attribute: .trailing,
+                               relatedBy: .equal,
+                               toItem: v1,
+                               attribute: .trailing,
+                               multiplier: 1,
+                               constant: 0)
+        )
+        v1.addConstraint(
+            NSLayoutConstraint(item: v2,
+                               attribute: .top,
+                               relatedBy: .equal,
+                               toItem: v1,
+                               attribute: .top,
+                               multiplier: 1,
+                               constant: 0)
+        )
+        v2.addConstraint(
+            NSLayoutConstraint(item: v2,
+                               attribute: .height,
+                               relatedBy: .equal,
+                               toItem: nil,
+                               attribute: .notAnAttribute,
+                               multiplier: 1,
+                               constant: 10)
+        )
+        v3.addConstraint(
+            NSLayoutConstraint(item: v3,
+                               attribute: .width,
+                               relatedBy: .equal,
+                               toItem: nil,
+                               attribute: .notAnAttribute,
+                               multiplier: 1,
+                               constant: 20)
+        )
+        v3.addConstraint(
+            NSLayoutConstraint(item: v3,
+                               attribute: .height,
+                               relatedBy: .equal,
+                               toItem: nil,
+                               attribute: .notAnAttribute,
+                               multiplier: 1,
+                               constant: 10)
+        )
+        v1.addConstraint(
+            NSLayoutConstraint(item: v3,
+                               attribute: .trailing,
+                               relatedBy: .equal,
+                               toItem: v1,
+                               attribute: .trailing,
+                               multiplier: 1,
+                               constant: 0)
+        )
+        v1.addConstraint(
+            NSLayoutConstraint(item: v3,
+                               attribute: .bottom,
+                               relatedBy: .equal,
+                               toItem: v1,
+                               attribute: .bottom,
+                               multiplier: 1,
+                               constant: 0)
+        )
     }
 }
 
@@ -203,4 +320,12 @@ extension UIView {
         }
     }
 }
+
+//activate constraint and set identifier.
+extension NSLayoutConstraint {
+    func activate(withIdentifier id: String) {
+        (self.identifier, self.isActive) = (id, true)
+    }
+}
+
 //Named Views.
