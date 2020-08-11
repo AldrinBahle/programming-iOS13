@@ -10,6 +10,10 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var v2 : UIView!
+    var constraintsWith = [NSLayoutConstraint]()
+    var constraintsWithout = [NSLayoutConstraint]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -134,17 +138,17 @@ class ViewController: UIViewController {
 //            lab2.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20)
 //        ])
         //Creating Constraints in Code.
-        let v1 = UIView(frame: CGRect(100, 111, 132, 194))
-        v1.backgroundColor = UIColor(red: 0, green: 0.4, blue: 1, alpha: 1)
-        let v2 = UIView()
-        v2.backgroundColor = UIColor(red: 0.5, green: 1, blue: 0, alpha: 1)
-        let v3 = UIView()
-        v3.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
-        self.view.addSubview(v1)
-        v1.addSubview(v2)
-        v1.addSubview(v3)
-        v2.translatesAutoresizingMaskIntoConstraints = false
-        v3.translatesAutoresizingMaskIntoConstraints = false
+//        let v1 = UIView(frame: CGRect(100, 111, 132, 194))
+//        v1.backgroundColor = UIColor(red: 0, green: 0.4, blue: 1, alpha: 1)
+//        let v2 = UIView()
+//        v2.backgroundColor = UIColor(red: 0.5, green: 1, blue: 0, alpha: 1)
+//        let v3 = UIView()
+//        v3.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
+//        self.view.addSubview(v1)
+//        v1.addSubview(v2)
+//        v1.addSubview(v3)
+//        v2.translatesAutoresizingMaskIntoConstraints = false
+//        v3.translatesAutoresizingMaskIntoConstraints = false
 
 //        v1.addConstraint(
 //            NSLayoutConstraint(item: v2,
@@ -230,6 +234,67 @@ class ViewController: UIViewController {
 //            v3.bottomAnchor.constraint(equalTo:v1.bottomAnchor)
 //        ])
         //Using Visual Format Notation to add constraints.
+//        let d = ["v2":v2, "v3":v3]
+//        NSLayoutConstraint.activate([
+//            NSLayoutConstraint.constraints(withVisualFormat:
+//                "H:|[v2]", metrics: nil, views: d),
+//            NSLayoutConstraint.constraints(withVisualFormat:
+//                       "V:|[v2(10)]", metrics: nil, views: d),
+//            NSLayoutConstraint.constraints(withVisualFormat:
+//                       "H:[v3(20)]|", metrics: nil, views: d),
+//            NSLayoutConstraint.constraints(withVisualFormat:
+//                "V:[v3(20)]|", metrics: nil, views: d)
+//            ].flatMap{$0})
+        //Figure 1-15, Alternate sets of views and constraints.
+//        let v1 = UIView()
+//        v1.backgroundColor = .red
+//        v1.translatesAutoresizingMaskIntoConstraints = false
+//        let v2 = UIView()
+//        v2.backgroundColor = .yellow
+//        v2.translatesAutoresizingMaskIntoConstraints = false
+//        let v3 = UIView()
+//        v3.backgroundColor = .blue
+//        v3.translatesAutoresizingMaskIntoConstraints = false
+//        self.view.addSubview(v1)
+//        self.view.addSubview(v2)
+//        self.view.addSubview(v3)
+//        self.v2 = v2 //retain
+//        //construct constraints.
+//        let c1 = NSLayoutConstraint.constraints(withVisualFormat:
+//            "H:|-(20)-[v(100)]", metrics: nil, views: ["v":v1])
+//        let c2 = NSLayoutConstraint.constraints(withVisualFormat:
+//            "H:|-(20)-[v(100)]", metrics: nil, views: ["v":v2])
+//        let c3 = NSLayoutConstraint.constraints(withVisualFormat:
+//            "H:|-(20)-[v(100)]", metrics: nil, views: ["v":v3])
+//        let c4 = NSLayoutConstraint.constraints(withVisualFormat:
+//            "V:|-(100)-[v(20)]", metrics: nil, views: ["v":v1])
+//        let c5with = NSLayoutConstraint.constraints(withVisualFormat:
+//            "V:[v1]-(20)-[v2(20)]-(20)-[v3(20)]", metrics: nil,
+//                                                  views: ["v1":v1, "v2":v2, "v3":v3])
+//        let c5without = NSLayoutConstraint.constraints(withVisualFormat:
+//            "V:[v1]-(20)-[v3(20)]", metrics: nil, views: ["v1":v1, "v3":v3])
+//        //apply common constraints.
+//        NSLayoutConstraint.activate([c1, c3, c4].flatMap{$0})
+//        //first set of constraints (for when v2 is present).
+//        self.constraintsWith.append(contentsOf: c2)
+//        self.constraintsWith.append(contentsOf: c5with)
+//        //second set of constraints (for when v2 is absent)
+//        self.constraintsWithout.append(contentsOf: c5without)
+//        
+//        //apply first set.
+//        NSLayoutConstraint.activate(self.constraintsWith)
+//        
+//        func doSwap() {
+//            if self.v2.superview != nil {
+//                self.v2.removeFromSuperview()
+//                NSLayoutConstraint.deactivate(self.constraintsWith)
+//                NSLayoutConstraint.activate(self.constraintsWithout)
+//            } else {
+//                self.view.addSubview(v2)
+//                NSLayoutConstraint.deactivate(self.constraintsWithout)
+//                NSLayoutConstraint.activate(self.constraintsWith)
+//            }
+//        }
     }
 }
 
